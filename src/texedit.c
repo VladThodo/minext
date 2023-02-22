@@ -1,7 +1,7 @@
 /* 
    Copyright (c) Vlad Todosin 2023 
    Simple text editor capable of running in the linux terminal. 
-   Used this a a project for getting a bit more familiar with C
+   Used this a a project for getting a bit more familiar with C. Hopefully it will be of use for somebody
 */
 
 #include <stdio.h>
@@ -43,7 +43,19 @@ void clearCommandBuffer(){
     }
 }
 
+bool cmdCheck(char cmd[10]){
+    for(int i = 0; i < strlen(cmd); i++){
+        if(CURRENT_CMD[i] != cmd[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
 void handleCommand(){
+    if(cmdCheck('clear')){
+        printRaw('C');
+    }
     clearCommandBuffer();
 }
 
@@ -66,7 +78,7 @@ int main(){
 
         } else {                                        // This means we're in command mode
           
-            if(c == 13){                                // Check for enter key
+            if(c == 27){                                // Check for enter key
                 handleCommand();
                 printRaw('c');
             }
